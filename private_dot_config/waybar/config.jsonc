@@ -8,7 +8,7 @@
   "margin-left": 10,
   "margin-right": 10,
 
-  "modules-left": ["sway/workspaces", "sway/window"],
+  "modules-left": ["hyprland/workspaces", "hyprland/window"],
   "modules-center": ["clock"],
   "modules-right": [
     "pulseaudio",
@@ -20,14 +20,18 @@
     "custom/notification"
   ],
 
-  "sway/workspaces": {
-    "disable-scroll": true,
-    "all-outputs": false,
-    "format": "{name}"
+  "hyprland/workspaces": {
+    "on-click": "activate",
+    "format": "{name}",
+    "format-icons": {
+      "active": "",
+      "default": ""
+    }
   },
 
-  "sway/window": {
-    "max-length": 50
+  "hyprland/window": {
+    "max-length": 50,
+    "separate-outputs": true
   },
 
   "clock": {
