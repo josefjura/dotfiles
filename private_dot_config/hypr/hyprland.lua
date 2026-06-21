@@ -94,12 +94,12 @@ hl.config({
 
     input = {
         kb_layout = "us",
-        follow_focus = 1,
+        follow_focus = true,
         sensitivity = 0,
         touchpad = {
             natural_scroll = true,
             disable_while_typing = true,
-            ["tap-to-click"] = true,
+            tap_to_click = true,
         },
     },
 
