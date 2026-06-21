@@ -1,0 +1,20 @@
+[".chezmoiexternals.toml"]
+  # This file is managed by chezmoi — do not edit manually
+
+["plugins/zsh-autosuggestions"]
+  type = "git-repo"
+  url = "https://github.com/zsh-users/zsh-autosuggestions.git"
+  clone.args = ["--depth", "1"]
+  pull.args = ["--ff-only"]
+
+["plugins/zsh-syntax-highlighting"]
+  type = "git-repo"
+  url = "https://github.com/zsh-users/zsh-syntax-highlighting.git"
+  clone.args = ["--depth", "1"]
+  pull.args = ["--ff-only"]
+
+["plugins/fzf-tab"]
+  type = "git-repo"
+  url = "https://github.com/Aloxaf/fzf-tab.git"
+  clone.args = ["--depth", "1"]
+  pull.args = ["--ff-only"]
