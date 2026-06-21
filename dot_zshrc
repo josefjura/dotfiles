@@ -1,0 +1,117 @@
+# ~/.zshrc — Catppuccin Mocha system setup
+
+# XDG
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
+
+# PATH
+export PATH="$HOME/.local/bin:$PATH"
+
+# Wayland / Hyprland env vars (also put in hyprland.conf env block, but belt+suspenders)
+export MOZ_ENABLE_WAYLAND=1
+export QT_QPA_PLATFORM=wayland
+export GDK_BACKEND=wayland,x11
+
+# Editor
+export EDITOR=nvim
+export VISUAL=nvim
+
+# Pager
+export PAGER=batcat
+export MANPAGER="sh -c 'col -bx | batcat -l man -p'"
+
+# fzf — Catppuccin Mocha colors
+export FZF_DEFAULT_COMMAND='fdfind --type f --hidden --follow --exclude .git'
+export FZF_DEFAULT_OPTS=" \
+  --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+  --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+  --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
+  --color=selected-bg:#45475a \
+  --multi"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+# bat — Catppuccin theme
+export BAT_THEME="Catppuccin Mocha"
+
+# Aliases
+alias ls='eza --icons'
+alias ll='eza -l --icons --git'
+alias la='eza -la --icons --git'
+alias lt='eza --tree --icons -L 2'
+alias bat='batcat'
+alias cat='batcat'
+alias find='fdfind'
+alias fd='fdfind'
+alias grep='rg'
+alias cd='z'   # zoxide
+alias g='lazygit'
+alias v='nvim'
+alias vim='nvim'
+alias zj='zellij'
+alias yy='yazi'
+
+# Git aliases
+alias gs='git status'
+alias gd='git diff'
+alias gl='git log --oneline --graph'
+
+# Zsh options
+setopt AUTO_CD           # cd by typing dir name
+setopt CORRECT           # typo correction
+setopt HIST_IGNORE_DUPS  # no duplicate history
+setopt HIST_IGNORE_SPACE # don't save commands starting with space
+setopt SHARE_HISTORY     # share history across sessions
+setopt EXTENDED_HISTORY  # timestamp in history
+
+HISTFILE=~/.zsh_history
+HISTSIZE=50000
+SAVEHIST=50000
+
+# Completion
+autoload -Uz compinit
+compinit
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+
+# Plugins (loaded from ~/.config/zsh/plugins/)
+ZSH_PLUGIN_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/plugins"
+
+load_plugin() {
+  local plugin=$1 file=$2
+  local dir="$ZSH_PLUGIN_DIR/$plugin"
+  [[ -f "$dir/$file" ]] && source "$dir/$file"
+}
+
+load_plugin zsh-autosuggestions    zsh-autosuggestions.zsh
+load_plugin zsh-syntax-highlighting zsh-syntax-highlighting.zsh
+load_plugin fzf-tab                fzf-tab.plugin.zsh
+
+# Zsh autosuggestions style
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#585b70'
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+
+# fzf shell integration
+[[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]] && \
+  source /usr/share/doc/fzf/examples/key-bindings.zsh
+[[ -f /usr/share/doc/fzf/examples/completion.zsh ]] && \
+  source /usr/share/doc/fzf/examples/completion.zsh
+
+# Zoxide
+eval "$(zoxide init zsh)"
+
+# mise (language versions)
+[[ -f "$HOME/.local/bin/mise" ]] && eval "$(mise activate zsh)"
+
+# Starship prompt
+eval "$(starship init zsh)"
+
+# Yazi — change directory on exit
+function yy() {
+  local tmp; tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+  yazi "$@" --cwd-file="$tmp"
+  if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+    builtin cd -- "$cwd"
+  fi
+  rm -f -- "$tmp"
+}

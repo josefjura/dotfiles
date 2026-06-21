@@ -1,0 +1,98 @@
+// Waybar config — Catppuccin Mocha
+{
+  "layer": "top",
+  "position": "top",
+  "height": 36,
+  "spacing": 4,
+  "margin-top": 6,
+  "margin-left": 10,
+  "margin-right": 10,
+
+  "modules-left": ["sway/workspaces", "sway/window"],
+  "modules-center": ["clock"],
+  "modules-right": [
+    "pulseaudio",
+    "network",
+    "battery",
+    "cpu",
+    "memory",
+    "tray",
+    "custom/notification"
+  ],
+
+  "sway/workspaces": {
+    "disable-scroll": true,
+    "all-outputs": false,
+    "format": "{name}"
+  },
+
+  "sway/window": {
+    "max-length": 50
+  },
+
+  "clock": {
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "format": " {:%H:%M}",
+    "format-alt": " {:%Y-%m-%d}"
+  },
+
+  "cpu": {
+    "format": " {usage}%",
+    "tooltip": false
+  },
+
+  "memory": {
+    "format": " {}%"
+  },
+
+  "battery": {
+    "states": {
+      "good": 95,
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{icon} {capacity}%",
+    "format-charging": " {capacity}%",
+    "format-plugged": " {capacity}%",
+    "format-icons": ["", "", "", "", ""]
+  },
+
+  "network": {
+    "format-wifi": " {signalStrength}%",
+    "format-ethernet": " connected",
+    "format-disconnected": "󰤭 disconnected",
+    "tooltip-format-wifi": "{essid} ({signalStrength}%)",
+    "tooltip-format-ethernet": "{ifname}: {ipaddr}",
+    "on-click": "nm-connection-editor"
+  },
+
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-muted": "󰝟 muted",
+    "format-icons": {
+      "default": ["", "", ""]
+    },
+    "on-click": "pavucontrol"
+  },
+
+  "tray": {
+    "spacing": 8
+  },
+
+  "custom/notification": {
+    "tooltip": false,
+    "format": "{icon}",
+    "format-icons": {
+      "notification": "󱅫",
+      "none": "",
+      "dnd-notification": "󱅫",
+      "dnd-none": ""
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true
+  }
+}

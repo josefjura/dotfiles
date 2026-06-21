@@ -1,0 +1,76 @@
+/* Waybar style — Catppuccin Mocha */
+
+@define-color base     #1e1e2e;
+@define-color mantle   #181825;
+@define-color surface0 #313244;
+@define-color surface1 #45475a;
+@define-color overlay0 #6c7086;
+@define-color text     #cdd6f4;
+@define-color subtext1 #bac2de;
+@define-color blue     #89b4fa;
+@define-color mauve    #cba6f7;
+@define-color sapphire #74c7ec;
+@define-color green    #a6e3a1;
+@define-color yellow   #f9e2af;
+@define-color peach    #fab387;
+@define-color red      #f38ba8;
+
+* {
+  font-family: "JetBrainsMono Nerd Font", monospace;
+  font-size: 13px;
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+}
+
+window#waybar {
+  background: transparent;
+  color: @text;
+}
+
+.modules-left,
+.modules-center,
+.modules-right {
+  background: @base;
+  border-radius: 12px;
+  padding: 2px 8px;
+}
+
+#workspaces button {
+  padding: 2px 8px;
+  color: @overlay0;
+  background: transparent;
+  border-radius: 8px;
+}
+
+#workspaces button.active {
+  color: @mauve;
+  background: @surface0;
+}
+
+#workspaces button:hover {
+  color: @text;
+  background: @surface0;
+}
+
+#clock {
+  color: @blue;
+  font-weight: bold;
+}
+
+#cpu { color: @green; }
+#memory { color: @yellow; }
+#battery { color: @peach; }
+#battery.warning { color: @yellow; }
+#battery.critical { color: @red; }
+#battery.charging { color: @green; }
+#network { color: @sapphire; }
+#pulseaudio { color: @mauve; }
+#pulseaudio.muted { color: @overlay0; }
+#tray { color: @subtext1; }
+#custom-notification { color: @blue; }
+
+#window {
+  color: @subtext1;
+  font-style: italic;
+}
