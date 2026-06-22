@@ -34,6 +34,14 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 # bat theme
 export BAT_THEME="Catppuccin Mocha"
 
+# SSH agent auto-start
+if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+    ssh-agent -t 1h > "$XDG_RUNTIME_DIR/ssh-agent.env"
+fi
+if [[ ! -S "$SSH_AUTH_SOCK" ]]; then
+    source "$XDG_RUNTIME_DIR/ssh-agent.env" > /dev/null
+fi
+
 # Aliases
 alias ls='eza --icons'
 alias ll='eza -l --icons --git'
